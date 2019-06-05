@@ -44,6 +44,12 @@ class Article(models.Model):
 
 - Display the SQL statements for the specified migration
 
+##### 3. `python manage.py migrate [appName] zero`
+
+- unapply all DB migrations (delete DB content, i.e tables) for application "appName" (Must specify app)
+
+
+
 
 
 # Manipulate Data in DB (CRUD)
@@ -64,6 +70,10 @@ Example) Model name: `Article` ; Columns: `id`, `title`, `content`
 
 ##### Alternatively, with `django_extensions` and `ipython`:
 
+- Installation:
+  - `pip install django ipython django_extensions`	
+    - (install along with django)
+  - Add `django_extensions` to settings.py INSTALLED_APPS
 - `python manage.py dbshell`  (instead of `sqlite3 db.sqlite3`)
 - `python manage.py shell`  - console format will have changed
   - e.g) `In [1]: from articles.models import Article` 
@@ -72,6 +82,13 @@ Example) Model name: `Article` ; Columns: `id`, `title`, `content`
   - `exit()` to exit
 - `python manage.py shell_plus` 
   - automatically imports `from articles.models import Article` etc 
+
+##### IPython Notebook
+
+- `pip install django-extensions "ipython[notebook]"`
+  - (add `django_extensions` to settings.py INSTALLED_APPS)
+- `python manage.py shell_plus --notebook`
+  - opens db shell as a Jupyter Notebook
 
 ### CREATE
 
@@ -181,11 +198,29 @@ admin.site.register(Job, JobAdmin)  #(_3_)
 
 
 
+# Database Relations (Table Relations)
 
+##### 1:1 Relation
 
+- one-to-one match for each and every record of 2 separate tables
+- e.g) individual & social security number  (both cases have a unique value)
+    - 1:1 relationships are not so common
 
+##### 1:N Relation
 
+- one-to-many, has_many, belongs_to
+- e.g) class-students, post-comments, user-posts
+- Usually more convenient to track the "1" side FROM the "N" side (as opposed to having the "1" side keep track of all "N" members)
+  - Primary Key of "1" => Foreign Key of "N"
 
+##### M:N Relation
+
+- Many to many
+- e.g) lectures - students
+  - each lecture can have many students, and each students can have many lectures
+- All 1:N relations can be expressed with M:N
+
+##### No Relation
 
 
 
